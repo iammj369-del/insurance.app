@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register | InsureDesk</title>
+  <meta name="theme-color" content="#0f766e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="InsureDesk">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="auth-page" data-auth-mode="register">
+  <main class="auth-shell">
+    <section class="auth-card">
+      <h1>Register</h1>
+      <form>
+        <label>Admin name<input name="full_name" type="text" placeholder="Enter admin name" required></label>
+        <label>Email id<input name="email" type="email" placeholder="Enter email id" required></label>
+        <label>Password<input name="password" type="password" placeholder="Enter password" minlength="6" required></label>
+        <button class="btn primary" type="submit">Register</button>
+      </form>
+      <p data-message class="form-message"></p>
+      <a class="text-link" href="login.html">Already registered? Login</a>
+    </section>
+  </main>
+  <script type="module" src="assets/auth.js"></script>
+</body>
+</html>

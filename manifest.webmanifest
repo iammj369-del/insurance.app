@@ -1,0 +1,19 @@
+{
+  "name": "InsureDesk",
+  "short_name": "InsureDesk",
+  "description": "Vehicle insurance manager for admins.",
+  "start_url": "/login.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#eef4f5",
+  "theme_color": "#0f766e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

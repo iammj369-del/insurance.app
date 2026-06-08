@@ -1,0 +1,7 @@
+vehicle_type,owner_name,finance_company_name,owner_mobile,vehicle_reg_no,vehicle_company_name,vehicle_model_name,insurance_company_name,fc_expiry_date,insurance_expiry_date,policy_issued_date,permit_expiry_date,invoice_amount,payment_status,invoice_pdf_url,customer_proof_urls,vehicle_image_urls
+Own Board Vehicle (Two wheeler),Arun Kumar,HDFC Vehicle Finance,9876543210,TN01AB1234,Honda,Activa 6G,ICICI Lombard,2027-03-12,2026-07-15,2025-07-15,2027-04-20,4200,Paid,,,
+Own Board Vehicle (Four wheeler),Meena Lakshmi,SBI Auto Loan,9840012345,TN09CD5678,Maruti Suzuki,Swift,New India Assurance,2026-12-01,2026-06-25,2025-06-25,2026-12-30,12800,Pending,,,
+T-Board Vehicle Auto (Gas),Ravi Shankar,TVS Credit,9790011223,TN10EF9012,Bajaj,RE Compact,United India Insurance,2026-09-10,2026-06-18,2025-06-18,2026-11-11,7600,Pending,,,
+T-Board Vehicle Taxi,Suresh Babu,Mahindra Finance,9444422222,TN22GH3456,Toyota,Etios,Oriental Insurance,2027-01-05,2026-08-05,2025-08-05,2027-02-14,15400,Paid,,,
+T-Board Vehicle Bus,Anitha Transport,Cholamandalam Finance,9360012345,TN45JK7890,Ashok Leyland,Lynx,National Insurance,2026-10-22,2026-06-10,2025-06-10,2026-10-22,34200,Pending,,,
+Own Board Vehicle (Three wheeler),Karthik Raj,Bajaj Finance,9003011122,TN05LM4321,Piaggio,Ape Xtra,Future Generali,2027-05-08,2026-09-18,2025-09-18,2027-06-01,6900,Paid,,,

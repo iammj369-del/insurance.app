@@ -1,0 +1,17 @@
+{
+  "name": "insurance-handler-manager",
+  "version": "1.0.0",
+  "description": "Supabase-backed vehicle insurance handler and manager web app.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js assets/app.js assets/auth.js assets/dashboard.js assets/insurance.js assets/customers.js assets/settings.js"
+  },
+  "keywords": [
+    "insurance",
+    "supabase",
+    "vehicle-manager"
+  ],
+  "author": "",
+  "license": "MIT"
+}

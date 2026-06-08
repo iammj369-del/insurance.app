@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings | InsureDesk</title>
+  <meta name="theme-color" content="#0f766e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="InsureDesk">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div data-shell class="app-shell">
+    <main class="settings-layout">
+      <section class="panel">
+        <p class="eyebrow">Admin profile</p>
+        <h1>Settings</h1>
+        <form id="profileForm" class="data-form">
+        <div class="avatar-row compact">
+          <div class="avatar-upload">
+          <img data-avatar src="assets/default-avatar.svg" alt="Admin profile picture">
+            <button class="avatar-plus" type="button" data-avatar-trigger title="Upload profile picture" aria-label="Upload profile picture">+</button>
+            <input class="visually-hidden" name="profile_picture" data-avatar-input type="file" accept="image/*">
+          </div>
+        </div>
+          <label>Name<input name="full_name" placeholder="Enter admin name" required></label>
+          <label>Mobile number<input name="mobile" placeholder="Enter mobile number"></label>
+          <label>Email id<input name="email" type="email" placeholder="Enter email id"></label>
+          <button class="btn primary" type="submit">Save Profile</button>
+        </form>
+        <p data-profile-message class="form-message"></p>
+      </section>
+
+      <section class="panel">
+        <h2>Insurance Agents</h2>
+        <form id="agentForm" class="agent-form">
+          <input name="full_name" placeholder="Agent name" required>
+          <input name="mobile" placeholder="Mobile number" required>
+          <input name="email" type="email" placeholder="Email id" required>
+          <button class="btn secondary" type="submit">Add Agent</button>
+        </form>
+        <div class="stack-list" data-agents></div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="assets/settings.js"></script>
+</body>
+</html>

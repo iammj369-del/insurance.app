@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | InsureDesk</title>
+  <meta name="theme-color" content="#0f766e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="InsureDesk">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div data-shell class="app-shell">
+    <main class="dashboard-layout">
+      <section class="page-title">
+        <div>
+          <p class="eyebrow">Admin dashboard</p>
+          <h1>Expiry Notifications</h1>
+        </div>
+        <div class="profile-bubble" data-profile-bubble title="Admin profile"></div>
+      </section>
+      <section class="stats-grid" data-stats></section>
+      <section class="two-column">
+        <div class="panel">
+          <h2>Ending soon</h2>
+          <div class="stack-list" data-alerts></div>
+        </div>
+        <div class="panel">
+          <h2>Customers</h2>
+          <div class="stack-list" data-customers></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="assets/dashboard.js"></script>
+</body>
+</html>
