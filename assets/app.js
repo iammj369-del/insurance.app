@@ -159,6 +159,23 @@ export async function fetchCustomers() {
   return data || [];
 }
 
+export async function fetchAgents() {
+  const { data, error } = await supabase
+    .from("insurance_agents")
+    .select("*")
+    .order("full_name", { ascending: true });
+  if (error) throw error;
+  return data || [];
+}
+
+export function fillAgentSelect(select, agents, selectedId = "") {
+  if (!select) return;
+  select.innerHTML = `<option value="">Select insurance agent</option>` +
+    agents.map((agent) =>
+      `<option value="${agent.id}" ${agent.id === selectedId ? "selected" : ""}>${agent.full_name} - ${agent.mobile}</option>`
+    ).join("");
+}
+
 export function renderConfigWarning() {
   const urlRef = getUrlProjectRef();
   const keyRef = getAnonKeyProjectRef();

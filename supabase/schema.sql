@@ -45,6 +45,9 @@ create table if not exists public.insurance_agents (
   created_at timestamptz not null default now()
 );
 
+alter table public.vehicle_insurances
+add column if not exists insurance_agent_id uuid references public.insurance_agents(id) on delete set null;
+
 alter table public.vehicle_insurances enable row level security;
 alter table public.admin_profiles enable row level security;
 alter table public.insurance_agents enable row level security;

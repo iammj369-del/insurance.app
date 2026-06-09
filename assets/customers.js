@@ -1,5 +1,7 @@
 import {
+  fetchAgents,
   fetchCustomers,
+  fillAgentSelect,
   fillVehicleTypes,
   formatDate,
   initFileClearButtons,
@@ -26,9 +28,19 @@ const search = document.querySelector("[data-search]");
 const customerForm = document.querySelector("#customerForm");
 const saveMessage = document.querySelector("[data-save-message]");
 let customers = [];
+let agents = [];
 let selectedCustomer = null;
 
 fillVehicleTypes(document.querySelector("#customer_vehicle_type"));
+
+function agentFor(customer) {
+  return agents.find((agent) => agent.id === customer.insurance_agent_id);
+}
+
+function agentText(customer) {
+  const agent = agentFor(customer);
+  return agent ? `${agent.full_name} - ${agent.mobile}` : "Not assigned";
+}
 
 function fileState(customer) {
   const pdf = customer.invoice_pdf_url ? "Invoice PDF uploaded" : "Invoice PDF missing";
@@ -42,7 +54,7 @@ function renderList(items) {
     <button class="customer-row as-button" data-reg="${customer.vehicle_reg_no}">
       <span>
         <strong>${customer.owner_name}</strong>
-        <small>${customer.vehicle_reg_no} · ${customer.owner_mobile}</small>
+        <small>${customer.vehicle_reg_no} · ${customer.owner_mobile}${agentFor(customer) ? ` · Agent: ${agentFor(customer).full_name}` : ""}</small>
       </span>
       <span class="${statusClass(customer.payment_status)}">${customer.payment_status}</span>
     </button>`).join("") || "<p class=\"muted\">No matching customers.</p>";
@@ -67,6 +79,7 @@ function renderDetails(customer) {
       <div><span>Finance company</span><strong>${customer.finance_company_name || "Not set"}</strong></div>
       <div><span>Vehicle model</span><strong>${customer.vehicle_company_name} ${customer.vehicle_model_name}</strong></div>
       <div><span>Insurance company</span><strong>${customer.insurance_company_name || "Not set"}</strong></div>
+      <div><span>Insurance agent</span><strong>${agentText(customer)}</strong></div>
       <div><span>Policy issued date</span><strong>${formatDate(customer.policy_issued_date)}</strong></div>
       <div><span>Insurance expiry date</span><strong>${formatDate(customer.insurance_expiry_date)}</strong></div>
       <div><span>FC expiry date</span><strong>${formatDate(customer.fc_expiry_date)}</strong></div>
@@ -189,6 +202,7 @@ function fillCustomerForm(customer) {
   customerForm.permit_expiry_date.value = customer.permit_expiry_date || "";
   customerForm.invoice_amount.value = customer.invoice_amount || "";
   customerForm.payment_status.value = customer.payment_status || "Pending";
+  customerForm.insurance_agent_id.value = customer.insurance_agent_id || "";
 }
 
 list.addEventListener("click", (event) => {
@@ -242,7 +256,8 @@ customerForm.addEventListener("submit", async (event) => {
       policy_issued_date: formData.get("policy_issued_date") || null,
       permit_expiry_date: formData.get("permit_expiry_date") || null,
       invoice_amount: Number(formData.get("invoice_amount") || 0),
-      payment_status: formData.get("payment_status")
+      payment_status: formData.get("payment_status"),
+      insurance_agent_id: formData.get("insurance_agent_id") || null
     };
 
     if (invoicePdf) payload.invoice_pdf_url = invoicePdf;
@@ -278,6 +293,8 @@ search.addEventListener("input", () => {
   ));
 });
 
+agents = await fetchAgents();
+fillAgentSelect(document.querySelector("#insurance_agent_id"), agents);
 customers = await fetchCustomers();
 renderList(customers);
 

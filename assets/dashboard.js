@@ -1,4 +1,4 @@
-import { daysUntil, expiryLabel, fetchCustomers, formatDate, initShell, renderConfigWarning, requireSession, statusClass, supabase } from "./app.js";
+import { daysUntil, expiryLabel, fetchAgents, fetchCustomers, formatDate, initShell, renderConfigWarning, requireSession, statusClass, supabase } from "./app.js";
 
 document.body.insertAdjacentHTML("afterbegin", renderConfigWarning());
 initShell("Dashboard");
@@ -8,6 +8,11 @@ const stats = document.querySelector("[data-stats]");
 const alerts = document.querySelector("[data-alerts]");
 const customersList = document.querySelector("[data-customers]");
 const profileBubble = document.querySelector("[data-profile-bubble]");
+let agents = [];
+
+function agentFor(customer) {
+  return agents.find((agent) => agent.id === customer.insurance_agent_id);
+}
 
 function countDue(customers, maxDays) {
   return customers.filter((customer) => {
@@ -34,6 +39,7 @@ function render(customers) {
     <a class="alert-row" href="customers.html?reg=${customer.vehicle_reg_no}">
       <strong>${customer.owner_name}</strong>
       <span>${customer.vehicle_reg_no}</span>
+      ${agentFor(customer) ? `<span>Agent: ${agentFor(customer).full_name}</span>` : ""}
       <em>${expiryLabel(customer.insurance_expiry_date)}</em>
     </a>`).join("") : "<p class=\"muted\">No insurance expiry alerts within the next few months.</p>";
 
@@ -57,6 +63,7 @@ try {
   if (profile?.profile_picture_url) {
     profileBubble.style.backgroundImage = `url("${profile.profile_picture_url}")`;
   }
+  agents = await fetchAgents();
   render(await fetchCustomers());
 } catch (error) {
   alerts.innerHTML = `<p class="error-text">${error.message}</p>`;

@@ -1,6 +1,8 @@
 import {
   fillVehicleTypes,
+  fetchAgents,
   fetchCustomers,
+  fillAgentSelect,
   formatDate,
   initFileClearButtons,
   initShell,
@@ -30,6 +32,7 @@ const downloadCsv = document.querySelector("[data-download-csv]");
 const customerForm = document.querySelector("#customerForm");
 const saveMessage = document.querySelector("[data-save-message]");
 let selectedCustomer = null;
+let agents = [];
 
 const CSV_COLUMNS = [
   "vehicle_type",
@@ -53,6 +56,18 @@ const CSV_COLUMNS = [
 
 fillVehicleTypes(vehicleType);
 fillVehicleTypes(document.querySelector("#customer_vehicle_type"));
+
+function agentFor(customer) {
+  return agents.find((agent) => agent.id === customer.insurance_agent_id);
+}
+
+function agentText(customer) {
+  const agent = agentFor(customer);
+  return agent ? `${agent.full_name} - ${agent.mobile}` : "Not assigned";
+}
+
+agents = await fetchAgents();
+fillAgentSelect(document.querySelector("#insurance_agent_id"), agents);
 
 function proofList(customer) {
   const proofs = customer.proof_files || [];
@@ -87,6 +102,7 @@ function renderCustomer(customer) {
     <div><span>Finance company</span><strong>${customer.finance_company_name || "Not set"}</strong></div>
     <div><span>Owner mobile</span><strong>${customer.owner_mobile || "Not set"} ${whatsappIcon(customer.owner_mobile)}</strong></div>
     <div><span>Insurance company</span><strong>${customer.insurance_company_name || "Not set"}</strong></div>
+    <div><span>Insurance agent</span><strong>${agentText(customer)}</strong></div>
     <div><span>Invoice amount</span><strong>${money(customer.invoice_amount)}</strong></div>
     <div><span>Policy issued</span><strong>${formatDate(customer.policy_issued_date)}</strong></div>
     <div><span>Insurance expiry</span><strong>${formatDate(customer.insurance_expiry_date)}</strong></div>
@@ -267,6 +283,7 @@ function rowToPayload(headers, row) {
     permit_expiry_date: record.permit_expiry_date || null,
     invoice_amount: Number(record.invoice_amount || 0),
     payment_status: record.payment_status === "Paid" ? "Paid" : "Pending",
+    insurance_agent_id: null,
     invoice_pdf_url: record.invoice_pdf_url || null,
     proof_files: proofUrls(record.customer_proof_urls),
     vehicle_image_urls: splitUrls(record.vehicle_image_urls)
@@ -362,7 +379,8 @@ customerForm.addEventListener("submit", async (event) => {
       policy_issued_date: formData.get("policy_issued_date") || null,
       permit_expiry_date: formData.get("permit_expiry_date") || null,
       invoice_amount: Number(formData.get("invoice_amount") || 0),
-      payment_status: formData.get("payment_status")
+      payment_status: formData.get("payment_status"),
+      insurance_agent_id: formData.get("insurance_agent_id") || null
     };
 
     if (invoicePdf) payload.invoice_pdf_url = invoicePdf;
