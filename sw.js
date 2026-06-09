@@ -1,4 +1,4 @@
-const CACHE_NAME = "insuredesk-v1";
+const CACHE_NAME = "insuredesk-v2";
 const APP_SHELL = [
   "/",
   "/login.html",
@@ -14,7 +14,6 @@ const APP_SHELL = [
   "/assets/dashboard.js",
   "/assets/customers.js",
   "/assets/settings.js",
-  "/assets/config.js",
   "/assets/default-avatar.svg",
   "/assets/app-icon.svg",
   "/manifest.webmanifest"
@@ -35,6 +34,10 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
   if (url.hostname.includes("supabase.co")) return;
+  if (url.pathname === "/assets/config.js") {
+    event.respondWith(fetch(event.request));
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then((cached) =>
       cached || fetch(event.request).then((response) => {
